@@ -1,21 +1,24 @@
 import React from 'react'
 import { render } from 'react-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
-import configureStore from './store'
+import Listings from './components/Listings'
+import Login from './components/Login'
+import PrivateRoute from './components/PrivateRoute'
 
-const App = () => {
-  return (
-    <div>
-      <h1>React App Running!</h1>
-    </div>
-  )
-}
+import configureStore from './store'
 
 const store = configureStore()
 
 render(
-  <Provider store={store}>
-    <App />
-  </Provider>, document.getElementById('root')
+  <Router>
+    <Provider store={store}>
+      <Switch>
+        <Route path='/login' component={Login} />
+        <PrivateRoute path='/' component={Listings} />
+      </Switch>
+    </Provider>
+  </Router>,
+  document.getElementById('root')
 )
